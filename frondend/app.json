@@ -1,0 +1,58 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/scan/scan",
+    "pages/book-detail/book-detail",
+    "pages/borrow-list/borrow-list",
+    "pages/profile/profile",
+    "pages/admin/dashboard/dashboard",
+    "pages/admin/book-manage/book-manage",
+    "pages/admin/book-add/book-add",
+    "pages/admin/book-edit/book-edit",
+    "pages/admin/borrow-manage/borrow-manage",
+    "pages/admin/overdue-list/overdue-list",
+    "pages/admin/user-manage/user-manage",
+    "pages/admin/user-borrows/user-borrows",
+    "pages/test/test"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#000",
+    "navigationBarTitleText": "公司图书",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#999",
+    "selectedColor": "#2c9678",
+    "backgroundColor": "#fff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "图书首页",
+        "iconPath": "images/home.png",
+        "selectedIconPath": "images/home-active.png"
+      },
+      {
+        "pagePath": "pages/borrow-list/borrow-list",
+        "text": "借阅记录",
+        "iconPath": "images/book.png",
+        "selectedIconPath": "images/book-active.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的信息",
+        "iconPath": "images/user.png",
+        "selectedIconPath": "images/user-active.png"
+      }
+    ]
+  },
+  "permission": {
+    "scope.camera": {
+      "desc": "用于扫码识别图书ISBN"
+    }
+  },
+  "usingComponents": {
+    "book-card": "/components/book-card/book-card"
+  }
+}
