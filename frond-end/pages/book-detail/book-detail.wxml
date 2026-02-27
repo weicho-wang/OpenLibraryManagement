@@ -1,0 +1,33 @@
+<view class="container" wx:if="{{!loading && book}}">
+  <view class="book-header">
+    <image src="{{book.cover_url || '/images/default-book.png'}}" mode="aspectFit" />
+    <view class="meta">
+      <text class="title">{{book.title}}</text>
+      <text class="author">作者：{{book.author || '-'}} </text>
+      <text class="publisher">出版社：{{book.publisher || '-'}} </text>
+      <text class="isbn">ISBN：{{book.isbn}}</text>
+      <view class="tags" wx:if="{{book.tags && book.tags.length}}">
+        <text wx:for="{{book.tags}}" wx:key="*this" class="tag">{{item}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="actions">
+    <block wx:if="{{isBorrowed}}">
+      <button type="primary" class="btn-return" bindtap="onReturn">归还图书</button>
+    </block>
+    <block wx:else>
+      <button type="primary" disabled="{{book.stock === 0}}" bindtap="onBorrow">
+        {{book.stock > 0 ? '立即借阅' : '暂无库存'}}
+      </button>
+    </block>
+  </view>
+</view>
+
+<view class="empty" wx:elif="{{!loading}}">
+  <text>暂无图书信息</text>
+</view>
+
+<view class="loading" wx:else>
+  <text>加载中...</text>
+</view>

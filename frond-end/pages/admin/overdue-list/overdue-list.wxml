@@ -1,0 +1,26 @@
+<view class="container">
+  <view class="header">
+    <text class="title">⚠️ 逾期催还</text>
+    <text class="subtitle">共 {{total}} 本逾期未还</text>
+    <button size="mini" bindtap="batchRemind">一键催还全部</button>
+  </view>
+
+  <view class="overdue-list">
+    <block wx:for="{{overdues}}" wx:key="id">
+      <view class="overdue-item">
+        <view class="days-badge">
+          <text class="num">{{item.overdue_days}}</text>
+          <text class="unit">天</text>
+        </view>
+
+        <view class="detail">
+          <text class="book">{{item.book_title}}</text>
+          <text class="user">借阅人: 用户{{item.user_id}}</text>
+          <text class="due">应还日期: {{item.due_date}}</text>
+        </view>
+
+        <button size="mini" type="warn" bindtap="remind" data-id="{{item.id}}">催还</button>
+      </view>
+    </block>
+  </view>
+</view>

@@ -1,0 +1,94 @@
+<view class="container">
+  <view class="header">
+    <text class="title">编辑图书</text>
+    <text class="isbn">ISBN: {{book.isbn}}</text>
+  </view>
+
+  <view class="cover-section">
+    <image
+      src="{{book.cover_url || '/images/default-book.png'}}"
+      mode="aspectFit"
+      class="cover"
+      bindtap="changeCover"
+    />
+    <text class="tip">点击更换封面</text>
+  </view>
+
+  <view class="form-card">
+    <view class="form-item">
+      <text class="label required">图书名称</text>
+      <input value="{{book.title}}" bindinput="onInput" data-field="title" />
+    </view>
+
+    <view class="form-item">
+      <text class="label">作者</text>
+      <input value="{{book.author}}" bindinput="onInput" data-field="author" />
+    </view>
+
+    <view class="form-item">
+      <text class="label">出版社</text>
+      <input value="{{book.publisher}}" bindinput="onInput" data-field="publisher" />
+    </view>
+
+    <view class="form-item">
+      <text class="label">出版日期</text>
+      <input value="{{book.publish_date}}" bindinput="onInput" data-field="publish_date" />
+    </view>
+
+    <view class="form-item">
+      <text class="label">当前库存</text>
+      <view class="stock-control">
+        <text class="btn-minus" bindtap="changeStock" data-delta="-1">-</text>
+        <input type="number" value="{{book.stock}}" bindinput="onStockInput" />
+        <text class="btn-plus" bindtap="changeStock" data-delta="1">+</text>
+      </view>
+    </view>
+
+    <view class="form-item">
+      <text class="label">总库存</text>
+      <text class="value">{{book.total}} 本</text>
+    </view>
+
+    <view class="form-item">
+      <text class="label">分类标签</text>
+      <input value="{{tagsText}}" bindinput="onTagsInput" placeholder="技术 文学 管理" />
+    </view>
+
+    <view class="form-item vertical">
+      <text class="label">封面链接</text>
+      <input value="{{book.cover_url}}" bindinput="onInput" data-field="cover_url" />
+    </view>
+
+    <view class="form-item vertical">
+      <text class="label">内容简介</text>
+      <textarea value="{{book.summary}}" bindinput="onInput" data-field="summary" maxlength="1000" />
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-title">借阅记录</view>
+    <view class="borrow-stats">
+      <text>历史借阅: {{stats.total_borrows}} 次</text>
+      <text>当前在借: {{stats.active_borrows}} 本</text>
+    </view>
+    <view class="borrow-list" wx:if="{{borrowHistory.length > 0}}">
+      <block wx:for="{{borrowHistory}}" wx:key="id">
+        <view class="borrow-item">
+          <text class="user">用户{{item.user_id}}</text>
+          <text class="date">{{item.borrowed_at}} 借</text>
+          <text class="status {{item.status}}">{{item.status_text}}</text>
+        </view>
+      </block>
+    </view>
+    <view class="empty" wx:else>暂无借阅记录</view>
+  </view>
+
+  <view class="actions">
+    <button type="default" bindtap="reset">重置</button>
+    <button type="primary" bindtap="save">保存修改</button>
+  </view>
+
+  <view class="danger-zone">
+    <button type="warn" bindtap="deleteBook">删除图书</button>
+  </view>
+</view>

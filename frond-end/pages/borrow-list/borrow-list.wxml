@@ -1,0 +1,40 @@
+<view class="container">
+  <view class="tabs">
+    <view
+      class="tab {{activeTab === 'current' ? 'active' : ''}}"
+      data-tab="current"
+      bindtap="switchTab"
+    >当前借阅</view>
+    <view
+      class="tab {{activeTab === 'history' ? 'active' : ''}}"
+      data-tab="history"
+      bindtap="switchTab"
+    >历史记录</view>
+  </view>
+
+  <button
+    wx:if="{{activeTab === 'current'}}"
+    class="quick-btn"
+    type="primary"
+    bindtap="quickReturn"
+  >扫码快速归还</button>
+
+  <view class="list" wx:if="{{borrows.length}}">
+    <view class="item" wx:for="{{borrows}}" wx:key="id">
+      <view class="title">{{item.book_title}}</view>
+      <view class="meta">ISBN：{{item.book_isbn}}</view>
+      <view class="meta">借出时间：{{item.borrowed_at || '-'}}</view>
+      <view class="meta" wx:if="{{activeTab === 'history'}}">归还时间：{{item.returned_at || '-'}}</view>
+      <button
+        wx:if="{{activeTab === 'current'}}"
+        size="mini"
+        bindtap="doReturn"
+        data-id="{{item.id}}"
+      >归还</button>
+    </view>
+  </view>
+
+  <view class="empty" wx:else>
+    <text>暂无记录</text>
+  </view>
+</view>

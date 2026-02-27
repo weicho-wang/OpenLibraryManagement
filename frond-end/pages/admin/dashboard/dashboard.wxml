@@ -1,0 +1,66 @@
+<view class="admin-container">
+  <view class="header">
+    <text class="title">📚 管理后台</text>
+    <text class="subtitle">{{today}}</text>
+  </view>
+
+  <view class="stats-grid">
+    <view class="stat-card primary" bindtap="goToBooks">
+      <text class="number">{{stats.totalBooks}}</text>
+      <text class="label">图书总数</text>
+      <text class="trend">+{{stats.newBooksToday}} 今日</text>
+    </view>
+
+    <view class="stat-card success" bindtap="goToBorrows">
+      <text class="number">{{stats.activeBorrows}}</text>
+      <text class="label">在借数量</text>
+      <text class="trend">{{stats.todayBorrows}} 今日借阅</text>
+    </view>
+
+    <view class="stat-card warning" bindtap="goToOverdue">
+      <text class="number">{{stats.overdueCount}}</text>
+      <text class="label">逾期未还</text>
+      <text class="trend" wx:if="{{stats.overdueCount > 0}}">需立即处理</text>
+    </view>
+
+    <view class="stat-card">
+      <text class="number">{{stats.totalUsers}}</text>
+      <text class="label">注册用户</text>
+      <text class="trend">+{{stats.newUsersToday}} 今日</text>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-title">快捷操作</view>
+    <view class="quick-actions">
+      <view class="action-btn" bindtap="scanAddBook">
+        <text class="icon">📷</text>
+        <text>扫码入库</text>
+      </view>
+      <view class="action-btn" bindtap="goToBooks">
+        <text class="icon">📖</text>
+        <text>图书管理</text>
+      </view>
+      <view class="action-btn" bindtap="goToOverdue">
+        <text class="icon">⚠️</text>
+        <text>逾期催还</text>
+      </view>
+      <view class="action-btn" bindtap="exportData">
+        <text class="icon">📊</text>
+        <text>导出数据</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-title">最近动态</view>
+    <view class="activity-list">
+      <block wx:for="{{recentActivities}}" wx:key="id">
+        <view class="activity-item">
+          <text class="time">{{item.time}}</text>
+          <text class="content">{{item.content}}</text>
+        </view>
+      </block>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,13 @@
+<view class="container">
+  <view class="card">
+    <view class="name">{{user.nickname || user.name || '微信用户'}}</view>
+    <view class="line">工号：{{user.employee_no || '-'}}</view>
+    <view class="line">部门：{{user.department || '-'}}</view>
+  </view>
+
+  <view class="actions">
+    <button bindtap="toBorrows">我的借阅</button>
+    <button wx:if="{{user.is_admin}}" bindtap="goAdmin">管理后台</button>
+    <button class="danger" bindtap="logout">退出登录</button>
+  </view>
+</view>

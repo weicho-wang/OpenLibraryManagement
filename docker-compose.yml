@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: library
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/library
+      - REDIS_URL=redis://redis:6379/0
+      - WX_APPID=${WX_APPID}
+      - WX_SECRET=${WX_SECRET}
+      - SECRET_KEY=${SECRET_KEY:-change-me-in-production}
+    depends_on:
+      - db
+      - redis
+
+volumes:
+  pg_data:

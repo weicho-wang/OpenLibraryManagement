@@ -1,0 +1,10 @@
+<view class="book-item" bindtap="onTap">
+  <image src="{{book.cover_url || '/images/default-book.png'}}" mode="aspectFill" />
+  <view class="info">
+    <text class="title">{{book.title}}</text>
+    <text class="author">{{book.author || '-'}}</text>
+    <text class="stock {{book.stock > 0 ? 'available' : 'empty'}}">
+      {{book.stock > 0 ? '可借' : '暂无库存'}}
+    </text>
+  </view>
+</view>

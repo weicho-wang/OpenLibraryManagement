@@ -1,0 +1,29 @@
+<view class="container">
+  <view class="search-box">
+    <input
+      type="text"
+      placeholder="输入书名/ISBN搜索"
+      value="{{keyword}}"
+      bindinput="onInput"
+      bindconfirm="onSearch"
+    />
+    <button size="mini" type="primary" bindtap="onSearch">搜索</button>
+  </view>
+
+  <view class="scan-section" bindtap="onScan">
+    <view class="scan-btn">
+      <text class="icon">📷</text>
+      <text class="text">扫码借书/还书</text>
+    </view>
+    <text class="tip">扫描图书背面ISBN条形码</text>
+  </view>
+
+  <view class="section">
+    <view class="section-title">最近上架</view>
+    <view class="book-list">
+      <block wx:for="{{recentBooks}}" wx:key="isbn">
+        <book-card book="{{item}}" bind:tapcard="goDetail"></book-card>
+      </block>
+    </view>
+  </view>
+</view>

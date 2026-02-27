@@ -1,0 +1,19 @@
+<view class="container">
+  <view class="stats">
+    <text>总借阅：{{stats.total || 0}}</text>
+    <text>在借：{{stats.active || 0}}</text>
+    <text>已归还：{{stats.returned || 0}}</text>
+  </view>
+
+  <view class="list" wx:if="{{records.length}}">
+    <view class="item" wx:for="{{records}}" wx:key="id">
+      <text class="title">{{item.book_title}}</text>
+      <text class="meta">ISBN：{{item.book_isbn}}</text>
+      <text class="meta">借阅：{{item.borrowed_at}}</text>
+      <text class="meta">应还：{{item.due_date}}</text>
+      <text class="meta">状态：{{item.status}}</text>
+    </view>
+  </view>
+
+  <view class="empty" wx:else>暂无记录</view>
+</view>

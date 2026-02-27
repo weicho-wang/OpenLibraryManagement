@@ -1,0 +1,61 @@
+<view class="container">
+  <view class="scan-section" bindtap="reScan">
+    <text class="isbn">ISBN: {{isbn}}</text>
+    <text class="tip">点击重新扫码</text>
+  </view>
+
+  <view class="form-card">
+    <view class="form-item">
+      <text class="label">图书名称 *</text>
+      <input placeholder="请输入书名" value="{{book.title}}" bindinput="onInput" data-field="title" />
+    </view>
+
+    <view class="form-item">
+      <text class="label">作者</text>
+      <input placeholder="请输入作者" value="{{book.author}}" bindinput="onInput" data-field="author" />
+    </view>
+
+    <view class="form-item">
+      <text class="label">出版社</text>
+      <input placeholder="请输入出版社" value="{{book.publisher}}" bindinput="onInput" data-field="publisher" />
+    </view>
+
+    <view class="form-item">
+      <text class="label">出版日期</text>
+      <input placeholder="如：2023-01" value="{{book.publish_date}}" bindinput="onInput" data-field="publish_date" />
+    </view>
+
+    <view class="form-item">
+      <text class="label">入库数量 *</text>
+      <input type="number" placeholder="默认1本" value="{{book.stock}}" bindinput="onInput" data-field="stock" />
+    </view>
+
+    <view class="form-item">
+      <text class="label">分类标签</text>
+      <input placeholder="技术/文学/管理，用空格分隔" value="{{tagsText}}" bindinput="onTagsInput" />
+    </view>
+
+    <view class="form-item">
+      <text class="label">封面链接</text>
+      <input placeholder="https://" value="{{book.cover_url}}" bindinput="onInput" data-field="cover_url" />
+    </view>
+
+    <view class="form-item vertical">
+      <text class="label">内容简介</text>
+      <textarea
+        placeholder="请输入图书简介..."
+        value="{{book.summary}}"
+        bindinput="onInput"
+        data-field="summary"
+        maxlength="500"
+      />
+    </view>
+  </view>
+
+  <image wx:if="{{book.cover_url}}" src="{{book.cover_url}}" mode="aspectFit" class="cover-preview" binderror="onImageError" />
+
+  <view class="actions">
+    <button type="default" bindtap="autoFill">自动查询</button>
+    <button type="primary" bindtap="submit">确认入库</button>
+  </view>
+</view>

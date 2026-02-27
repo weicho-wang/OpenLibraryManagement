@@ -1,0 +1,50 @@
+<view class="container">
+  <view class="search-bar">
+    <input
+      placeholder="搜索书名/ISBN/作者"
+      value="{{keyword}}"
+      bindinput="onSearchInput"
+      bindconfirm="doSearch"
+    />
+    <button size="mini" type="primary" bindtap="doSearch">搜索</button>
+  </view>
+
+  <scroll-view class="filter-bar" scroll-x>
+    <text class="filter-item {{currentFilter === 'all' ? 'active' : ''}}" bindtap="setFilter" data-filter="all">全部</text>
+    <text class="filter-item {{currentFilter === 'low' ? 'active' : ''}}" bindtap="setFilter" data-filter="low">库存紧张</text>
+    <text class="filter-item {{currentFilter === 'zero' ? 'active' : ''}}" bindtap="setFilter" data-filter="zero">已借完</text>
+  </scroll-view>
+
+  <view class="book-list">
+    <block wx:for="{{books}}" wx:key="isbn">
+      <view class="book-item" bindtap="editBook" data-isbn="{{item.isbn}}">
+        <image src="{{item.cover_url || '/images/default-book.png'}}" mode="aspectFill" />
+
+        <view class="info">
+          <view class="title-row">
+            <text class="title">{{item.title}}</text>
+            <text class="stock {{item.stock === 0 ? 'zero' : item.stock < 3 ? 'low' : ''}}">剩{{item.stock}}本</text>
+          </view>
+          <text class="meta">{{item.author}} | {{item.publisher}}</text>
+          <text class="isbn">ISBN: {{item.isbn}}</text>
+        </view>
+
+        <view class="actions" catchtap="onAction" data-book="{{item}}">
+          <text class="btn-edit">编辑</text>
+          <text class="btn-delete" data-isbn="{{item.isbn}}">删除</text>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <view class="empty" wx:if="{{books.length === 0 && !loading}}">
+    <text>暂无图书数据</text>
+    <button bindtap="goAdd">去录入</button>
+  </view>
+
+  <view class="load-more" wx:if="{{hasMore}}">
+    <text bindtap="loadMore">加载更多</text>
+  </view>
+
+  <view class="fab" bindtap="scanAdd">+</view>
+</view>

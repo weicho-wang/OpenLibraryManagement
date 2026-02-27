@@ -1,0 +1,6 @@
+<view class="container">
+  <button type="primary" bindtap="onScan">开始扫码</button>
+  <view class="result" wx:if="{{result}}">
+    <text>最近扫描：{{result}}</text>
+  </view>
+</view>

@@ -1,0 +1,99 @@
+<view class="container">
+  <view class="stats-bar">
+    <view class="stat-item">
+      <text class="num">{{stats.total}}</text>
+      <text class="label">总用户</text>
+    </view>
+    <view class="stat-item">
+      <text class="num">{{stats.admins}}</text>
+      <text class="label">管理员</text>
+    </view>
+    <view class="stat-item">
+      <text class="num">{{stats.active_today}}</text>
+      <text class="label">今日活跃</text>
+    </view>
+  </view>
+
+  <view class="search-bar">
+    <input
+      placeholder="搜索用户ID或昵称"
+      value="{{keyword}}"
+      bindinput="onSearchInput"
+      bindconfirm="doSearch"
+    />
+    <button size="mini" type="primary" bindtap="doSearch">搜索</button>
+  </view>
+
+  <view class="filter-tabs">
+    <text class="{{filter === 'all' ? 'active' : ''}}" bindtap="setFilter" data-filter="all">全部</text>
+    <text class="{{filter === 'admin' ? 'active' : ''}}" bindtap="setFilter" data-filter="admin">管理员</text>
+    <text class="{{filter === 'recent' ? 'active' : ''}}" bindtap="setFilter" data-filter="recent">最近注册</text>
+  </view>
+
+  <view class="user-list">
+    <block wx:for="{{users}}" wx:key="id">
+      <view class="user-item" bindtap="viewDetail" data-id="{{item.id}}">
+        <view class="avatar-section">
+          <image src="{{item.avatar_url || '/images/default-avatar.png'}}" class="avatar" />
+          <view class="badge admin" wx:if="{{item.is_admin}}">管</view>
+        </view>
+
+        <view class="info">
+          <view class="name-row">
+            <text class="name">{{item.nickname || '用户' + item.id}}</text>
+            <text class="id">ID: {{item.id}}</text>
+          </view>
+          <view class="meta">
+            <text>注册: {{item.created_at}}</text>
+            <text>借阅: {{item.borrow_count}} 本</text>
+          </view>
+          <view class="meta" wx:if="{{item.current_borrows > 0}}">
+            <text class="borrowing">当前在借: {{item.current_borrows}} 本</text>
+          </view>
+        </view>
+
+        <view class="actions" catchtap="onAction" data-user="{{item}}">
+          <text class="btn-more">···</text>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <view class="load-more" wx:if="{{hasMore}}">
+    <text bindtap="loadMore">{{loading ? '加载中...' : '加载更多'}}</text>
+  </view>
+
+  <view class="empty" wx:if="{{users.length === 0 && !loading}}">
+    <text>未找到用户</text>
+  </view>
+</view>
+
+<view class="modal" wx:if="{{showModal}}" bindtap="closeModal">
+  <view class="modal-content" catchtap="stopPropagation">
+    <view class="modal-header">
+      <image src="{{currentUser.avatar_url || '/images/default-avatar.png'}}" class="modal-avatar"/>
+      <text class="modal-name">{{currentUser.nickname || '用户' + currentUser.id}}</text>
+      <text class="modal-id">ID: {{currentUser.id}}</text>
+    </view>
+
+    <view class="modal-body">
+      <view class="info-row">
+        <text class="label">注册时间</text>
+        <text class="value">{{currentUser.created_at}}</text>
+      </view>
+      <view class="info-row">
+        <text class="label">借阅统计</text>
+        <text class="value">共 {{currentUser.total_borrows || 0}} 次 / 当前 {{currentUser.current_borrows || 0}} 本</text>
+      </view>
+      <view class="info-row">
+        <text class="label">管理员权限</text>
+        <switch checked="{{currentUser.is_admin}}" bindchange="toggleAdmin" color="#667eea" />
+      </view>
+    </view>
+
+    <view class="modal-footer">
+      <button bindtap="viewUserBorrows">查看借阅记录</button>
+      <button type="warn" bindtap="banUser">禁用账号</button>
+    </view>
+  </view>
+</view>

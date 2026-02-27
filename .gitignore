@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.env
+.env.development
+.env.production
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# 微信小程序
+wx-mini/node_modules/
+wx-mini/miniprogram_npm/
+wx-mini/.esm-cache/
+wx-mini/project.private.config.json
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 日志
+*.log
+logs/
+
+# 数据库
+*.sqlite3
+*.db
+
+# 上传的文件
+uploads/
+static/uploads/
+
+# Docker
+.dockerignore  # 保留文件本身，但忽略内容

@@ -1,0 +1,1 @@
+<view class="borrow-action"><slot></slot></view>

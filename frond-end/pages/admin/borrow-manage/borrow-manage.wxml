@@ -1,0 +1,42 @@
+<view class="container">
+  <view class="tabs">
+    <view class="tab {{activeTab === 'active' ? 'active' : ''}}" bindtap="switchTab" data-tab="active">
+      借阅中 <text class="badge">{{counts.active}}</text>
+    </view>
+    <view class="tab {{activeTab === 'returned' ? 'active' : ''}}" bindtap="switchTab" data-tab="returned">
+      已归还 <text class="badge">{{counts.returned}}</text>
+    </view>
+    <view class="tab {{activeTab === 'overdue' ? 'active' : ''}}" bindtap="switchTab" data-tab="overdue">
+      已逾期 <text class="badge warning">{{counts.overdue}}</text>
+    </view>
+  </view>
+
+  <view class="borrow-list">
+    <block wx:for="{{records}}" wx:key="id">
+      <view class="borrow-item {{item.status === 'overdue' ? 'overdue' : ''}}">
+        <view class="book-info">
+          <text class="title">{{item.book_title}}</text>
+          <text class="isbn">{{item.book_isbn}}</text>
+        </view>
+
+        <view class="user-info">
+          <text class="name">借阅人: 用户{{item.user_id}}</text>
+          <text class="date">借于: {{item.borrowed_at}}</text>
+          <text class="due {{item.is_overdue ? 'red' : ''}}">
+            应还: {{item.due_date}} {{item.is_overdue ? '(已逾期)' : ''}}
+          </text>
+        </view>
+
+        <view class="actions">
+          <block wx:if="{{activeTab === 'active' || activeTab === 'overdue'}}">
+            <button size="mini" type="primary" bindtap="remindReturn" data-id="{{item.id}}">催还</button>
+            <button size="mini" type="warn" bindtap="forceReturn" data-id="{{item.id}}">强制归还</button>
+          </block>
+          <block wx:else>
+            <text class="returned-tag">已归还</text>
+          </block>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>
